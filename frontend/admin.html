@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel Admin · Portero Digital</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--verde:#4caf8a;--azul:#0d2b3e;--radius:12px}
+  body{font-family:'DM Sans',sans-serif;background:#f0f4f7;min-height:100vh}
+  .topbar{background:var(--azul);color:#fff;padding:16px 24px;display:flex;align-items:center;gap:12px}
+  .topbar-brand{font-family:'Syne',sans-serif;font-size:18px;font-weight:800}
+  .topbar-sub{font-size:11px;letter-spacing:2px;color:var(--verde);text-transform:uppercase}
+  .topbar-badge{margin-left:auto;background:rgba(76,175,138,0.2);border:1px solid rgba(76,175,138,0.4);border-radius:20px;padding:4px 12px;font-size:12px;color:var(--verde)}
+
+  .container{max-width:900px;margin:0 auto;padding:24px 16px}
+
+  /* STATS */
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:24px}
+  .stat-card{background:#fff;border-radius:var(--radius);border:1px solid #e2eaf0;padding:16px;text-align:center}
+  .stat-num{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:var(--azul)}
+  .stat-label{font-size:12px;color:#8a9aaa;margin-top:4px}
+
+  /* TABLA */
+  .card{background:#fff;border-radius:var(--radius);border:1px solid #e2eaf0;overflow:hidden;margin-bottom:24px}
+  .card-header{padding:16px 20px;border-bottom:1px solid #e2eaf0;display:flex;align-items:center;justify-content:space-between}
+  .card-title{font-size:14px;font-weight:600;color:var(--azul)}
+  table{width:100%;border-collapse:collapse}
+  th{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#8a9aaa;padding:10px 16px;text-align:left;border-bottom:1px solid #e2eaf0;font-weight:500}
+  td{padding:10px 16px;font-size:13px;color:#1a2a35;border-bottom:1px solid #f0f4f7;vertical-align:middle}
+  tr:last-child td{border-bottom:none}
+  tr:hover td{background:#f8fafc}
+
+  /* TOGGLE */
+  .toggle{position:relative;display:inline-block;width:40px;height:22px;flex-shrink:0}
+  .toggle input{opacity:0;width:0;height:0}
+  .slider{position:absolute;cursor:pointer;inset:0;background:#dde4ea;border-radius:22px;transition:.2s}
+  .slider::before{content:"";position:absolute;width:16px;height:16px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.2s}
+  input:checked+.slider{background:var(--verde)}
+  input:checked+.slider::before{transform:translateX(18px)}
+
+  /* INPUT */
+  .input-tel{border:1px solid #dde4ea;border-radius:7px;padding:5px 8px;font-size:12px;width:130px;font-family:inherit;color:#1a2a35}
+  .input-tel:focus{outline:none;border-color:var(--verde)}
+  .btn-save{background:var(--azul);color:#fff;border:none;border-radius:7px;padding:5px 10px;font-size:12px;cursor:pointer;font-family:inherit;font-weight:500}
+  .btn-save:hover{opacity:0.85}
+  .btn-save.saved{background:#4caf8a}
+
+  /* VISITAS */
+  .canal-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:20px;font-size:11px;font-weight:500}
+  .canal-llamada{background:#e8f0fe;color:#2d5be3}
+  .canal-whatsapp{background:#e8f5f0;color:#0d6e4a}
+
+  .loading{text-align:center;padding:24px;color:#8a9aaa;font-size:13px}
+  .section-title{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#8a9aaa;font-weight:500;margin-bottom:12px}
+
+  /* LOGIN */
+  #login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:#f0f4f7}
+  .login-card{background:#fff;border-radius:16px;border:1px solid #e2eaf0;padding:32px;width:100%;max-width:360px}
+  .login-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--azul);margin-bottom:4px}
+  .login-sub{font-size:13px;color:#8a9aaa;margin-bottom:24px}
+  .form-group{margin-bottom:16px}
+  .form-label{font-size:12px;font-weight:500;color:#5a7080;display:block;margin-bottom:6px}
+  .form-input{width:100%;border:1px solid #dde4ea;border-radius:8px;padding:10px 12px;font-size:14px;font-family:inherit;color:#1a2a35}
+  .form-input:focus{outline:none;border-color:var(--verde)}
+  .btn-login{width:100%;background:var(--azul);color:#fff;border:none;border-radius:8px;padding:12px;font-size:14px;font-weight:500;cursor:pointer;font-family:inherit;margin-top:8px}
+  .btn-login:hover{opacity:0.88}
+  .login-error{color:#e24b4a;font-size:13px;margin-top:8px;display:none}
+
+  #main-screen{display:none}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-title">Panel Admin</div>
+    <div class="login-sub">Portero Digital · Complejo Los Gigantes</div>
+    <div class="form-group">
+      <label class="form-label">Usuario</label>
+      <input class="form-input" type="text" id="user" value="admin">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Contraseña</label>
+      <input class="form-input" type="password" id="pass" placeholder="••••••••">
+    </div>
+    <button class="btn-login" onclick="doLogin()">Ingresar</button>
+    <div class="login-error" id="login-error">Usuario o contraseña incorrectos.</div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div id="main-screen">
+  <div class="topbar">
+    <div>
+      <div class="topbar-brand">LOS GIGANTES</div>
+      <div class="topbar-sub">Panel de Administración</div>
+    </div>
+    <span class="topbar-badge" id="stats-badge">Cargando...</span>
+  </div>
+
+  <div class="container">
+
+    <!-- STATS -->
+    <div class="stats" id="stats-row">
+      <div class="stat-card"><div class="stat-num" id="s-total">—</div><div class="stat-label">Total visitas</div></div>
+      <div class="stat-card"><div class="stat-num" id="s-24h">—</div><div class="stat-label">Últimas 24h</div></div>
+      <div class="stat-card"><div class="stat-num" id="s-llamadas">—</div><div class="stat-label">Llamadas</div></div>
+      <div class="stat-card"><div class="stat-num" id="s-wa">—</div><div class="stat-label">WhatsApp</div></div>
+    </div>
+
+    <!-- VIVIENDAS -->
+    <p class="section-title">Viviendas</p>
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">Gestión de viviendas — activar, teléfono y WhatsApp</span>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Vivienda</th>
+            <th>Activa</th>
+            <th>Teléfono</th>
+            <th>WhatsApp</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="viviendas-tbody">
+          <tr><td colspan="5" class="loading">Cargando viviendas...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- VISITAS -->
+    <p class="section-title">Últimas visitas</p>
+    <div class="card">
+      <table>
+        <thead>
+          <tr><th>Vivienda</th><th>Canal</th><th>Fecha y hora</th></tr>
+        </thead>
+        <tbody id="visitas-tbody">
+          <tr><td colspan="3" class="loading">Cargando...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const BACKEND = 'https://selfless-smile-production-f1f0.up.railway.app';
+  let AUTH = '';
+
+  function doLogin() {
+    const u = document.getElementById('user').value;
+    const p = document.getElementById('pass').value;
+    AUTH = 'Basic ' + btoa(u + ':' + p);
+    fetch(`${BACKEND}/admin/viviendas`, { headers: { Authorization: AUTH } })
+      .then(r => {
+        if (r.status === 401) throw new Error('401');
+        return r.json();
+      })
+      .then(data => {
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('main-screen').style.display = 'block';
+        renderViviendas(data);
+        loadStats();
+        loadVisitas();
+      })
+      .catch(() => {
+        document.getElementById('login-error').style.display = 'block';
+      });
+  }
+
+  document.getElementById('pass').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+
+  function loadStats() {
+    fetch(`${BACKEND}/admin/stats`, { headers: { Authorization: AUTH } })
+      .then(r => r.json())
+      .then(d => {
+        document.getElementById('s-total').textContent = d.total;
+        document.getElementById('s-24h').textContent = d.ultimas_24h;
+        document.getElementById('s-llamadas').textContent = d.llamadas;
+        document.getElementById('s-wa').textContent = d.whatsapps;
+        document.getElementById('stats-badge').textContent = `${d.ultimas_24h} visitas hoy`;
+      });
+  }
+
+  function loadVisitas() {
+    fetch(`${BACKEND}/admin/visitas`, { headers: { Authorization: AUTH } })
+      .then(r => r.json())
+      .then(rows => {
+        const tb = document.getElementById('visitas-tbody');
+        if (!rows.length) { tb.innerHTML = '<tr><td colspan="3" class="loading">Sin visitas registradas.</td></tr>'; return; }
+        tb.innerHTML = rows.map(v => {
+          const dt = new Date(v.timestamp);
+          const fecha = dt.toLocaleDateString('es-AR') + ' ' + dt.toLocaleTimeString('es-AR', {hour:'2-digit',minute:'2-digit'});
+          const badge = v.canal === 'llamada'
+            ? `<span class="canal-badge canal-llamada">📞 Llamada</span>`
+            : `<span class="canal-badge canal-whatsapp">💬 WhatsApp</span>`;
+          return `<tr><td>${v.vivienda}</td><td>${badge}</td><td>${fecha}</td></tr>`;
+        }).join('');
+      });
+  }
+
+  function renderViviendas(viviendas) {
+    const tb = document.getElementById('viviendas-tbody');
+    tb.innerHTML = viviendas.map(v => `
+      <tr id="row-${v.id}">
+        <td><strong>${v.nombre}</strong></td>
+        <td>
+          <label class="toggle">
+            <input type="checkbox" ${v.activa ? 'checked' : ''} onchange="toggleActiva(${v.id}, this.checked)">
+            <span class="slider"></span>
+          </label>
+        </td>
+        <td><input class="input-tel" type="tel" id="tel-${v.id}" value="${v.telefono || ''}" placeholder="+5493512..."></td>
+        <td><input class="input-tel" type="tel" id="wa-${v.id}" value="${v.whatsapp || ''}" placeholder="5493512..."></td>
+        <td><button class="btn-save" id="btn-${v.id}" onclick="guardarTelefono(${v.id})">Guardar</button></td>
+      </tr>
+    `).join('');
+  }
+
+  function toggleActiva(id, activa) {
+    fetch(`${BACKEND}/admin/viviendas/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', Authorization: AUTH },
+      body: JSON.stringify({ activa })
+    });
+  }
+
+  function guardarTelefono(id) {
+    const tel = document.getElementById(`tel-${id}`).value;
+    const wa  = document.getElementById(`wa-${id}`).value;
+    const btn = document.getElementById(`btn-${id}`);
+    fetch(`${BACKEND}/admin/viviendas/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', Authorization: AUTH },
+      body: JSON.stringify({ telefono: tel, whatsapp: wa })
+    }).then(r => r.json()).then(() => {
+      btn.textContent = '✓ Guardado';
+      btn.classList.add('saved');
+      setTimeout(() => { btn.textContent = 'Guardar'; btn.classList.remove('saved'); }, 2000);
+    });
+  }
+</script>
+</body>
+</html>

@@ -1,9 +1,10 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Depends, status
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from pydantic import BaseModel
-from datetime import datetime
 from typing import Optional
 import os
+import secrets
 import psycopg2
 import psycopg2.extras
 
@@ -17,10 +18,26 @@ app.add_middleware(
 )
 
 DATABASE_URL = os.environ.get("DATABASE_URL")
+ADMIN_USER = os.environ.get("ADMIN_USER", "admin")
+ADMIN_PASS = os.environ.get("ADMIN_PASS", "portero2024")
+
+security = HTTPBasic()
 
 
 def get_conn():
     return psycopg2.connect(DATABASE_URL, cursor_factory=psycopg2.extras.RealDictCursor)
+
+
+def require_admin(credentials: HTTPBasicCredentials = Depends(security)):
+    ok_user = secrets.compare_digest(credentials.username, ADMIN_USER)
+    ok_pass = secrets.compare_digest(credentials.password, ADMIN_PASS)
+    if not (ok_user and ok_pass):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Credenciales incorrectas",
+            headers={"WWW-Authenticate": "Basic"},
+        )
+    return credentials.username
 
 
 def init_db():
@@ -32,7 +49,7 @@ def init_db():
             nombre VARCHAR(100) NOT NULL,
             telefono VARCHAR(30),
             whatsapp VARCHAR(30),
-            activa BOOLEAN DEFAULT TRUE
+            activa BOOLEAN DEFAULT FALSE
         );
     """)
     cur.execute("""
@@ -44,16 +61,13 @@ def init_db():
             ip VARCHAR(50)
         );
     """)
-    cur.execute("""
-        INSERT INTO viviendas (nombre, telefono, whatsapp, activa)
-        SELECT nombre, telefono, whatsapp, activa FROM (VALUES
-            ('Vivienda 1', '', '', TRUE),
-            ('Vivienda 2', '', '', TRUE),
-            ('Vivienda 3', '', '', TRUE),
-            ('Vivienda 4', '', '', TRUE)
-        ) AS v(nombre, telefono, whatsapp, activa)
-        WHERE NOT EXISTS (SELECT 1 FROM viviendas LIMIT 1);
-    """)
+    # Insertar viviendas 1-24 si no existen
+    for i in range(1, 25):
+        cur.execute("""
+            INSERT INTO viviendas (nombre, activa)
+            SELECT %s, FALSE
+            WHERE NOT EXISTS (SELECT 1 FROM viviendas WHERE nombre = %s)
+        """, (f"Vivienda {i}", f"Vivienda {i}"))
     conn.commit()
     cur.close()
     conn.close()
@@ -68,7 +82,7 @@ def startup():
 
 class VisitaIn(BaseModel):
     vivienda_id: int
-    canal: str  # "llamada" | "whatsapp"
+    canal: str
     ip: Optional[str] = None
 
 
@@ -79,7 +93,7 @@ class ViviendaUpdate(BaseModel):
     activa: Optional[bool] = None
 
 
-# ---------- Endpoints ----------
+# ---------- Endpoints públicos ----------
 
 @app.get("/")
 def root():
@@ -95,25 +109,6 @@ def listar_viviendas():
     cur.close()
     conn.close()
     return rows
-
-
-@app.put("/viviendas/{vivienda_id}")
-def actualizar_vivienda(vivienda_id: int, data: ViviendaUpdate):
-    conn = get_conn()
-    cur = conn.cursor()
-    campos = {k: v for k, v in data.dict().items() if v is not None}
-    if not campos:
-        raise HTTPException(status_code=400, detail="No hay campos para actualizar")
-    set_clause = ", ".join([f"{k} = %s" for k in campos])
-    values = list(campos.values()) + [vivienda_id]
-    cur.execute(f"UPDATE viviendas SET {set_clause} WHERE id = %s RETURNING *", values)
-    row = cur.fetchone()
-    conn.commit()
-    cur.close()
-    conn.close()
-    if not row:
-        raise HTTPException(status_code=404, detail="Vivienda no encontrada")
-    return row
 
 
 @app.post("/visitas")
@@ -134,12 +129,44 @@ def registrar_visita(visita: VisitaIn):
     return row
 
 
-@app.get("/visitas")
-def listar_visitas(limit: int = 50):
+# ---------- Endpoints admin (requieren autenticación) ----------
+
+@app.get("/admin/viviendas")
+def admin_listar_todas(_=Depends(require_admin)):
+    conn = get_conn()
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM viviendas ORDER BY id")
+    rows = cur.fetchall()
+    cur.close()
+    conn.close()
+    return rows
+
+
+@app.put("/admin/viviendas/{vivienda_id}")
+def admin_actualizar(vivienda_id: int, data: ViviendaUpdate, _=Depends(require_admin)):
+    conn = get_conn()
+    cur = conn.cursor()
+    campos = {k: v for k, v in data.dict().items() if v is not None}
+    if not campos:
+        raise HTTPException(status_code=400, detail="No hay campos para actualizar")
+    set_clause = ", ".join([f"{k} = %s" for k in campos])
+    values = list(campos.values()) + [vivienda_id]
+    cur.execute(f"UPDATE viviendas SET {set_clause} WHERE id = %s RETURNING *", values)
+    row = cur.fetchone()
+    conn.commit()
+    cur.close()
+    conn.close()
+    if not row:
+        raise HTTPException(status_code=404, detail="Vivienda no encontrada")
+    return row
+
+
+@app.get("/admin/visitas")
+def admin_visitas(limit: int = 100, _=Depends(require_admin)):
     conn = get_conn()
     cur = conn.cursor()
     cur.execute("""
-        SELECT v.id, viv.nombre AS vivienda, v.canal, v.timestamp, v.ip
+        SELECT v.id, viv.nombre AS vivienda, v.canal, v.timestamp
         FROM visitas v
         JOIN viviendas viv ON viv.id = v.vivienda_id
         ORDER BY v.timestamp DESC
@@ -151,8 +178,8 @@ def listar_visitas(limit: int = 50):
     return rows
 
 
-@app.get("/visitas/stats")
-def stats_visitas():
+@app.get("/admin/stats")
+def admin_stats(_=Depends(require_admin)):
     conn = get_conn()
     cur = conn.cursor()
     cur.execute("""
@@ -160,7 +187,8 @@ def stats_visitas():
             COUNT(*) AS total,
             COUNT(*) FILTER (WHERE canal = 'llamada') AS llamadas,
             COUNT(*) FILTER (WHERE canal = 'whatsapp') AS whatsapps,
-            COUNT(*) FILTER (WHERE timestamp > NOW() - INTERVAL '24 hours') AS ultimas_24h
+            COUNT(*) FILTER (WHERE timestamp > NOW() - INTERVAL '24 hours') AS ultimas_24h,
+            COUNT(*) FILTER (WHERE timestamp > NOW() - INTERVAL '7 days') AS ultima_semana
         FROM visitas
     """)
     row = cur.fetchone()
