@@ -4,267 +4,313 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Portero Digital · Los Gigantes</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --verde: #4caf8a;
-    --verde-dark: #0d6e4a;
-    --azul: #0d2b3e;
-    --azul-mid: #133a52;
-    --wa: #25d366;
-    --radius: 14px;
-    --radius-sm: 9px;
-  }
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: #f0f4f7;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0 0 40px;
-  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--verde:#4caf8a;--verde-dark:#0d6e4a;--azul:#0d2b3e;--azul-mid:#133a52;--wa:#25d366;--radius:14px}
+  body{font-family:'DM Sans',sans-serif;background:#f0f4f7;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:0 0 40px}
 
-  /* HEADER */
-  .header {
-    width: 100%;
-    background: var(--azul);
-    color: #fff;
-    padding: 22px 20px 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-  }
-  .logo-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .logo-icon {
-    width: 46px; height: 46px;
-    background: var(--verde);
-    border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .logo-icon svg { width: 26px; height: 26px; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  .brand { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800; letter-spacing: 0.3px; }
-  .portero-label {
-    font-size: 11px; letter-spacing: 2.5px; color: var(--verde);
-    font-weight: 500; text-transform: uppercase; margin-top: 2px;
-  }
-  .header-msg {
-    font-size: 13px; color: rgba(255,255,255,0.7);
-    text-align: center; line-height: 1.5; margin-top: 8px;
-  }
-  .header-msg strong { color: var(--verde); }
-  .no-app-badge {
-    display: inline-flex; align-items: center; gap: 5px;
-    background: rgba(76,175,138,0.15);
-    border: 1px solid rgba(76,175,138,0.35);
-    border-radius: 20px; padding: 4px 12px;
-    font-size: 11px; color: var(--verde); margin-top: 6px;
-  }
-  .no-app-badge svg { width: 12px; height: 12px; stroke: var(--verde); fill: none; stroke-width: 2.5; }
+  /* ── HEADER ── */
+  .header{width:100%;background:var(--azul);color:#fff;padding:22px 20px 20px;display:flex;flex-direction:column;align-items:center;gap:6px}
+  .logo-row{display:flex;align-items:center;gap:12px}
+  .logo-icon{width:46px;height:46px;background:var(--verde);border-radius:12px;display:flex;align-items:center;justify-content:center}
+  .logo-icon svg{width:26px;height:26px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .brand{font-family:'Syne',sans-serif;font-size:22px;font-weight:800}
+  .portero-label{font-size:11px;letter-spacing:2.5px;color:var(--verde);font-weight:500;text-transform:uppercase;margin-top:2px}
+  .header-msg{font-size:13px;color:rgba(255,255,255,0.7);text-align:center;line-height:1.5;margin-top:8px}
+  .header-msg strong{color:var(--verde)}
+  .no-app-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(76,175,138,0.15);border:1px solid rgba(76,175,138,0.35);border-radius:20px;padding:4px 12px;font-size:11px;color:var(--verde);margin-top:6px}
 
-  /* MAIN CONTENT */
-  .container { width: 100%; max-width: 480px; padding: 20px 16px 0; }
+  /* ── PORTERO ── */
+  .container{width:100%;max-width:480px;padding:20px 16px 0}
+  .section-label{font-size:11px;letter-spacing:1.5px;color:#8a9aaa;font-weight:500;text-transform:uppercase;margin-bottom:12px;padding-left:2px}
+  .units{display:flex;flex-direction:column;gap:10px}
+  .unit-card{background:#fff;border-radius:var(--radius);border:1px solid #e2eaf0;padding:14px 16px;display:flex;align-items:center;gap:14px}
+  .unit-icon{width:44px;height:44px;background:#e8f5f0;border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .unit-icon svg{width:22px;height:22px;stroke:var(--verde-dark);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .unit-info{flex:1}
+  .unit-name{font-size:15px;font-weight:500;color:#1a2a35;margin-bottom:3px}
+  .unit-status{font-size:12px;color:var(--verde);display:flex;align-items:center;gap:5px}
+  .dot{width:6px;height:6px;background:var(--verde);border-radius:50%}
+  .unit-btns{display:flex;gap:7px;flex-shrink:0}
+  .btn-call,.btn-wa{display:flex;align-items:center;gap:5px;padding:8px 12px;border-radius:9px;font-size:13px;font-weight:500;cursor:pointer;text-decoration:none;border:none;transition:opacity .15s,transform .1s}
+  .btn-call:active,.btn-wa:active{transform:scale(0.96)}
+  .btn-call{background:var(--azul);color:#fff}
+  .btn-wa{background:var(--wa);color:#fff}
+  .btn-call svg,.btn-wa svg{width:15px;height:15px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .info-box{background:#fff;border-radius:var(--radius);border:1px solid #e2eaf0;padding:14px 16px;margin-top:12px}
+  .info-row{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:#5a7080;line-height:1.5;margin-bottom:8px}
+  .info-row:last-child{margin-bottom:0}
+  .info-row svg{width:16px;height:16px;stroke:#8a9aaa;fill:none;stroke-width:2;flex-shrink:0;margin-top:1px}
+  .emergency{background:#fff5f5;border:1px solid #fecaca;border-radius:var(--radius);padding:13px 16px;display:flex;align-items:center;gap:12px;margin-top:10px}
+  .emergency svg{width:22px;height:22px;stroke:#e24b4a;fill:none;stroke-width:2;flex-shrink:0}
+  .emergency-text{font-size:13px;color:#7f1d1d;line-height:1.5}
+  .footer{text-align:center;margin-top:28px;font-size:12px;color:#8a9aaa;line-height:1.7}
+  .loading{text-align:center;color:#8a9aaa;font-size:14px;padding:24px 0}
+  .error-msg{color:#c0392b;font-size:13px;text-align:center;padding:16px}
+  #toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);background:#1a2a35;color:#fff;padding:10px 20px;border-radius:30px;font-size:13px;font-weight:500;transition:transform .3s;pointer-events:none;z-index:99;white-space:nowrap}
+  #toast.show{transform:translateX(-50%) translateY(0)}
+  .admin-link{text-align:center;margin-top:16px}
+  .admin-link a{font-size:11px;color:#b0bec5;text-decoration:none}
 
-  .section-label {
-    font-size: 11px; letter-spacing: 1.5px; color: #8a9aaa;
-    font-weight: 500; text-transform: uppercase;
-    margin-bottom: 12px; padding-left: 2px;
-  }
+  /* ── ADMIN ── */
+  #screen-admin{display:none;width:100%;flex-direction:column}
+  .topbar{width:100%;background:var(--azul);color:#fff;padding:16px 24px;display:flex;align-items:center;gap:12px}
+  .topbar-brand{font-family:'Syne',sans-serif;font-size:18px;font-weight:800}
+  .topbar-sub{font-size:11px;letter-spacing:2px;color:var(--verde);text-transform:uppercase}
+  .topbar-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+  .topbar-badge{background:rgba(76,175,138,0.2);border:1px solid rgba(76,175,138,0.4);border-radius:20px;padding:4px 12px;font-size:12px;color:var(--verde)}
+  .btn-logout{background:transparent;border:1px solid rgba(255,255,255,0.3);color:#fff;border-radius:8px;padding:5px 12px;font-size:12px;cursor:pointer;font-family:inherit}
+  .admin-container{max-width:960px;margin:0 auto;padding:24px 16px;width:100%}
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:24px}
+  .stat-card{background:#fff;border-radius:var(--radius);border:1px solid #e2eaf0;padding:16px;text-align:center}
+  .stat-num{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:var(--azul)}
+  .stat-label{font-size:12px;color:#8a9aaa;margin-top:4px}
+  .card{background:#fff;border-radius:var(--radius);border:1px solid #e2eaf0;overflow:hidden;margin-bottom:24px}
+  .card-header{padding:14px 20px;border-bottom:1px solid #e2eaf0}
+  .card-title{font-size:14px;font-weight:600;color:var(--azul)}
+  .a-section-label{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#8a9aaa;font-weight:500;margin-bottom:12px}
+  table{width:100%;border-collapse:collapse}
+  th{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#8a9aaa;padding:10px 14px;text-align:left;border-bottom:1px solid #e2eaf0;font-weight:500}
+  td{padding:9px 14px;font-size:13px;color:#1a2a35;border-bottom:1px solid #f0f4f7;vertical-align:middle}
+  tr:last-child td{border-bottom:none}
+  tr:hover td{background:#f8fafc}
+  .toggle{position:relative;display:inline-block;width:40px;height:22px;flex-shrink:0}
+  .toggle input{opacity:0;width:0;height:0}
+  .slider{position:absolute;cursor:pointer;inset:0;background:#dde4ea;border-radius:22px;transition:.2s}
+  .slider::before{content:"";position:absolute;width:16px;height:16px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.2s}
+  input:checked+.slider{background:var(--verde)}
+  input:checked+.slider::before{transform:translateX(18px)}
+  .input-tel{border:1px solid #dde4ea;border-radius:7px;padding:5px 8px;font-size:12px;width:130px;font-family:inherit;color:#1a2a35}
+  .input-tel:focus{outline:none;border-color:var(--verde)}
+  .btn-save{background:var(--azul);color:#fff;border:none;border-radius:7px;padding:5px 10px;font-size:12px;cursor:pointer;font-family:inherit;font-weight:500}
+  .btn-save:hover{opacity:.85}
+  .btn-save.saved{background:var(--verde)}
+  .canal-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:20px;font-size:11px;font-weight:500}
+  .canal-llamada{background:#e8f0fe;color:#2d5be3}
+  .canal-whatsapp{background:#e8f5f0;color:#0d6e4a}
 
-  /* VIVIENDAS */
-  .units { display: flex; flex-direction: column; gap: 10px; }
-  .unit-card {
-    background: #fff;
-    border-radius: var(--radius);
-    border: 1px solid #e2eaf0;
-    padding: 14px 16px;
-    display: flex; align-items: center; gap: 14px;
-  }
-  .unit-icon {
-    width: 44px; height: 44px;
-    background: #e8f5f0;
-    border-radius: 11px;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-  }
-  .unit-icon svg { width: 22px; height: 22px; stroke: var(--verde-dark); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  .unit-info { flex: 1; }
-  .unit-name { font-size: 15px; font-weight: 500; color: #1a2a35; margin-bottom: 3px; }
-  .unit-status { font-size: 12px; color: var(--verde); display: flex; align-items: center; gap: 5px; }
-  .dot { width: 6px; height: 6px; background: var(--verde); border-radius: 50%; }
-  .unit-btns { display: flex; gap: 7px; flex-shrink: 0; }
-
-  .btn-call, .btn-wa {
-    display: flex; align-items: center; gap: 5px;
-    padding: 8px 12px; border-radius: 9px;
-    font-size: 13px; font-weight: 500;
-    cursor: pointer; text-decoration: none;
-    border: none; transition: opacity 0.15s, transform 0.1s;
-  }
-  .btn-call:active, .btn-wa:active { transform: scale(0.96); }
-  .btn-call { background: var(--azul); color: #fff; }
-  .btn-wa   { background: var(--wa);   color: #fff; }
-  .btn-call svg, .btn-wa svg { width: 15px; height: 15px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-
-  /* INFO BOX */
-  .info-box {
-    background: #fff; border-radius: var(--radius);
-    border: 1px solid #e2eaf0;
-    padding: 14px 16px; margin-top: 12px;
-  }
-  .info-row {
-    display: flex; align-items: flex-start; gap: 10px;
-    font-size: 13px; color: #5a7080; line-height: 1.5; margin-bottom: 8px;
-  }
-  .info-row:last-child { margin-bottom: 0; }
-  .info-row svg { width: 16px; height: 16px; stroke: #8a9aaa; fill: none; stroke-width: 2; flex-shrink: 0; margin-top: 1px; }
-
-  /* EMERGENCY */
-  .emergency {
-    background: #fff5f5; border: 1px solid #fecaca;
-    border-radius: var(--radius); padding: 13px 16px;
-    display: flex; align-items: center; gap: 12px; margin-top: 10px;
-  }
-  .emergency svg { width: 22px; height: 22px; stroke: #e24b4a; fill: none; stroke-width: 2; flex-shrink: 0; }
-  .emergency-text { font-size: 13px; color: #7f1d1d; line-height: 1.5; }
-  .emergency-text strong { font-weight: 500; }
-
-  /* TOAST */
-  #toast {
-    position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(80px);
-    background: #1a2a35; color: #fff;
-    padding: 10px 20px; border-radius: 30px;
-    font-size: 13px; font-weight: 500;
-    transition: transform 0.3s; pointer-events: none; z-index: 99;
-    white-space: nowrap;
-  }
-  #toast.show { transform: translateX(-50%) translateY(0); }
-
-  /* FOOTER */
-  .footer { text-align: center; margin-top: 28px; font-size: 12px; color: #8a9aaa; line-height: 1.7; }
-  .loading { text-align: center; color: #8a9aaa; font-size: 14px; padding: 24px 0; }
-  .error-msg { color: #c0392b; font-size: 13px; text-align: center; padding: 16px; }
+  /* ── LOGIN ── */
+  #screen-login{display:none;align-items:center;justify-content:center;min-height:100vh;background:#f0f4f7;width:100%}
+  .login-card{background:#fff;border-radius:16px;border:1px solid #e2eaf0;padding:32px;width:100%;max-width:360px;margin:0 16px}
+  .login-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--azul);margin-bottom:4px}
+  .login-sub{font-size:13px;color:#8a9aaa;margin-bottom:24px}
+  .form-group{margin-bottom:16px}
+  .form-label{font-size:12px;font-weight:500;color:#5a7080;display:block;margin-bottom:6px}
+  .form-input{width:100%;border:1px solid #dde4ea;border-radius:8px;padding:10px 12px;font-size:14px;font-family:inherit;color:#1a2a35}
+  .form-input:focus{outline:none;border-color:var(--verde)}
+  .btn-login{width:100%;background:var(--azul);color:#fff;border:none;border-radius:8px;padding:12px;font-size:14px;font-weight:500;cursor:pointer;font-family:inherit;margin-top:8px}
+  .btn-login:hover{opacity:.88}
+  .login-error{color:#e24b4a;font-size:13px;margin-top:8px;display:none}
 </style>
 </head>
 <body>
 
-<header class="header">
-  <div class="logo-row">
-    <div class="logo-icon">
-      <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="15" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><circle cx="12" cy="12" r="1" fill="#fff"/></svg>
+<!-- PORTERO -->
+<div id="screen-portero" style="width:100%;display:flex;flex-direction:column;align-items:center">
+  <header class="header">
+    <div class="logo-row">
+      <div class="logo-icon"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="15" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><circle cx="12" cy="14" r="2" fill="#fff" stroke="none"/></svg></div>
+      <div><div class="brand">LOS GIGANTES</div><div class="portero-label">Portero Digital</div></div>
     </div>
-    <div>
-      <div class="brand">LOS GIGANTES</div>
-      <div class="portero-label">Portero Digital</div>
+    <p class="header-msg">El portero eléctrico está temporalmente fuera de servicio.<br><strong>Use este sistema para comunicarse con el residente.</strong></p>
+    <span class="no-app-badge"><svg viewBox="0 0 12 12" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2,6 5,9 10,3"/></svg> Sin necesidad de descargar apps</span>
+  </header>
+  <div class="container">
+    <p class="section-label">Seleccione una vivienda</p>
+    <div class="units" id="units"><div class="loading">Cargando viviendas…</div></div>
+    <div class="info-box" style="margin-top:20px">
+      <div class="info-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Este sistema reemplaza temporalmente al portero eléctrico.</div>
+      <div class="info-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Si no obtiene respuesta, intente nuevamente más tarde.</div>
+      <div class="info-row"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>Use el medio que le resulte más cómodo: llamada o WhatsApp.</div>
+    </div>
+    <div class="emergency">
+      <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 11.37 19a19.45 19.45 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      <div class="emergency-text"><strong>Emergencias:</strong> Comuníquese directamente con la Administración del Complejo.</div>
+    </div>
+    <div class="footer">Complejo Los Gigantes · Portero Digital<br>Entre todos hacemos que la comunicación sea más fácil.</div>
+    <div class="admin-link"><a href="#" onclick="showLogin();return false">⚙ Admin</a></div>
+  </div>
+</div>
+
+<!-- LOGIN ADMIN -->
+<div id="screen-login">
+  <div class="login-card">
+    <div class="login-title">Panel Admin</div>
+    <div class="login-sub">Portero Digital · Complejo Los Gigantes</div>
+    <div class="form-group"><label class="form-label">Usuario</label><input class="form-input" type="text" id="a-user" value="admin"></div>
+    <div class="form-group"><label class="form-label">Contraseña</label><input class="form-input" type="password" id="a-pass" placeholder="••••••••"></div>
+    <button class="btn-login" onclick="doLogin()">Ingresar</button>
+    <div class="login-error" id="login-error">Usuario o contraseña incorrectos.</div>
+    <div style="text-align:center;margin-top:16px"><a href="#" onclick="showPortero();return false" style="font-size:12px;color:#8a9aaa">← Volver al portero</a></div>
+  </div>
+</div>
+
+<!-- PANEL ADMIN -->
+<div id="screen-admin">
+  <div class="topbar">
+    <div><div class="topbar-brand">LOS GIGANTES</div><div class="topbar-sub">Panel Admin</div></div>
+    <div class="topbar-right">
+      <span class="topbar-badge" id="stats-badge">—</span>
+      <button class="btn-logout" onclick="showPortero()">← Salir</button>
     </div>
   </div>
-  <p class="header-msg">El portero eléctrico está temporalmente fuera de servicio.<br><strong>Use este sistema para comunicarse con el residente.</strong></p>
-  <span class="no-app-badge">
-    <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg>
-    Sin necesidad de descargar apps
-  </span>
-</header>
-
-<div class="container">
-  <p class="section-label">Seleccione una vivienda</p>
-  <div class="units" id="units">
-    <div class="loading">Cargando viviendas…</div>
-  </div>
-
-  <div class="info-box" style="margin-top:20px">
-    <div class="info-row">
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-      Este sistema reemplaza temporalmente al portero eléctrico.
+  <div class="admin-container">
+    <div class="stats">
+      <div class="stat-card"><div class="stat-num" id="s-total">—</div><div class="stat-label">Total visitas</div></div>
+      <div class="stat-card"><div class="stat-num" id="s-24h">—</div><div class="stat-label">Últimas 24h</div></div>
+      <div class="stat-card"><div class="stat-num" id="s-llamadas">—</div><div class="stat-label">Llamadas</div></div>
+      <div class="stat-card"><div class="stat-num" id="s-wa">—</div><div class="stat-label">WhatsApp</div></div>
     </div>
-    <div class="info-row">
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-      Si no obtiene respuesta, intente nuevamente más tarde.
+    <p class="a-section-label">Viviendas</p>
+    <div class="card">
+      <div class="card-header"><span class="card-title">Activar viviendas y cargar teléfonos</span></div>
+      <div style="overflow-x:auto">
+        <table>
+          <thead><tr><th>Vivienda</th><th>Activa</th><th>Teléfono</th><th>WhatsApp</th><th></th></tr></thead>
+          <tbody id="viviendas-tbody"><tr><td colspan="5" class="loading">Cargando…</td></tr></tbody>
+        </table>
+      </div>
     </div>
-    <div class="info-row">
-      <svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
-      Use el medio que le resulte más cómodo: llamada o WhatsApp.
+    <p class="a-section-label">Últimas visitas</p>
+    <div class="card">
+      <div style="overflow-x:auto">
+        <table>
+          <thead><tr><th>Vivienda</th><th>Canal</th><th>Fecha y hora</th></tr></thead>
+          <tbody id="visitas-tbody"><tr><td colspan="3" class="loading">Cargando…</td></tr></tbody>
+        </table>
+      </div>
     </div>
-  </div>
-
-  <div class="emergency">
-    <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 11.37 19a19.45 19.45 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-    <div class="emergency-text"><strong>Emergencias:</strong> Comuníquese directamente con la Administración del Complejo.</div>
-  </div>
-
-  <div class="footer">
-    Complejo Los Gigantes · Portero Digital<br>
-    Entre todos hacemos que la comunicación sea más fácil.
   </div>
 </div>
 
 <div id="toast"></div>
 
 <script>
-  const BACKEND_URL = 'https://selfless-smile-production-f1f0.up.railway.app';
+  const BACKEND = 'https://selfless-smile-production-f1f0.up.railway.app';
+  let AUTH = '';
 
-  function showToast(msg) {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 2800);
+  function show(id) {
+    ['screen-portero','screen-login','screen-admin'].forEach(s => {
+      const el = document.getElementById(s);
+      el.style.display = 'none';
+    });
+    const target = document.getElementById(id);
+    target.style.display = id === 'screen-admin' ? 'flex' : (id === 'screen-login' ? 'flex' : 'flex');
+    target.style.flexDirection = 'column';
+    target.style.alignItems = 'center';
+    if(id === 'screen-portero') target.style.alignItems = 'center';
   }
 
-  function registrarVisita(viviendaId, canal) {
-    fetch(`${BACKEND_URL}/visitas`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ vivienda_id: viviendaId, canal })
-    }).catch(() => {});
+  function showPortero(){ show('screen-portero'); }
+  function showLogin(){ show('screen-login'); }
+
+  function showToast(msg){
+    const t=document.getElementById('toast');
+    t.textContent=msg; t.classList.add('show');
+    setTimeout(()=>t.classList.remove('show'),2800);
   }
 
-  function renderUnits(viviendas) {
-    const container = document.getElementById('units');
-    if (!viviendas.length) {
-      container.innerHTML = '<div class="error-msg">No hay viviendas disponibles.</div>';
-      return;
-    }
-    container.innerHTML = viviendas.map(v => `
+  // ── PORTERO ──
+  function registrarVisita(viviendaId,canal){
+    fetch(`${BACKEND}/visitas`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({vivienda_id:viviendaId,canal})}).catch(()=>{});
+  }
+
+  function renderUnits(viviendas){
+    const container=document.getElementById('units');
+    if(!viviendas.length){container.innerHTML='<div class="error-msg">No hay viviendas disponibles.</div>';return;}
+    container.innerHTML=viviendas.map(v=>`
       <div class="unit-card">
-        <div class="unit-icon">
-          <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-        </div>
-        <div class="unit-info">
-          <div class="unit-name">${v.nombre}</div>
-          <div class="unit-status"><span class="dot"></span>Disponible</div>
-        </div>
+        <div class="unit-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+        <div class="unit-info"><div class="unit-name">${v.nombre}</div><div class="unit-status"><span class="dot"></span>Disponible</div></div>
         <div class="unit-btns">
-          ${v.telefono ? `
-          <a class="btn-call" href="tel:${v.telefono}" onclick="registrarVisita(${v.id},'llamada');showToast('Llamando a ${v.nombre}…')">
-            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 11.37 19a19.45 19.45 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-            Llamar
-          </a>` : ''}
-          ${v.whatsapp ? `
-          <a class="btn-wa" href="https://wa.me/${v.whatsapp}" target="_blank" onclick="registrarVisita(${v.id},'whatsapp');showToast('Abriendo WhatsApp…')">
-            <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-            WA
-          </a>` : ''}
+          ${v.telefono?`<a class="btn-call" href="tel:${v.telefono}" onclick="registrarVisita(${v.id},'llamada');showToast('Llamando a ${v.nombre}…')"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 11.37 19a19.45 19.45 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Llamar</a>`:''}
+          ${v.whatsapp?`<a class="btn-wa" href="https://wa.me/${v.whatsapp}" target="_blank" onclick="registrarVisita(${v.id},'whatsapp');showToast('Abriendo WhatsApp…')"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>WA</a>`:''}
         </div>
-      </div>
-    `).join('');
+      </div>`).join('');
   }
 
-  async function loadViviendas() {
-    try {
-      const res = await fetch(`${BACKEND_URL}/viviendas`);
-      if (!res.ok) throw new Error();
-      const data = await res.json();
-      renderUnits(data);
-    } catch {
-      document.getElementById('units').innerHTML =
-        '<div class="error-msg">No se pudo cargar la lista de viviendas.<br>Intente refrescar la página.</div>';
+  async function loadViviendas(){
+    try{
+      const res=await fetch(`${BACKEND}/viviendas`);
+      if(!res.ok) throw new Error();
+      renderUnits(await res.json());
+    }catch{
+      document.getElementById('units').innerHTML='<div class="error-msg">No se pudo cargar la lista.<br>Intente refrescar la página.</div>';
     }
+  }
+
+  // ── ADMIN LOGIN ──
+  function doLogin(){
+    const u=document.getElementById('a-user').value;
+    const p=document.getElementById('a-pass').value;
+    AUTH='Basic '+btoa(u+':'+p);
+    fetch(`${BACKEND}/admin/viviendas`,{headers:{Authorization:AUTH}})
+      .then(r=>{if(r.status===401)throw new Error('401');return r.json();})
+      .then(data=>{
+        show('screen-admin');
+        renderAdminViviendas(data);
+        loadStats();
+        loadVisitas();
+      })
+      .catch(()=>{document.getElementById('login-error').style.display='block';});
+  }
+  document.addEventListener('DOMContentLoaded',()=>{
+    document.getElementById('a-pass').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
+  });
+
+  // ── ADMIN DATA ──
+  function loadStats(){
+    fetch(`${BACKEND}/admin/stats`,{headers:{Authorization:AUTH}})
+      .then(r=>r.json())
+      .then(d=>{
+        document.getElementById('s-total').textContent=d.total;
+        document.getElementById('s-24h').textContent=d.ultimas_24h;
+        document.getElementById('s-llamadas').textContent=d.llamadas;
+        document.getElementById('s-wa').textContent=d.whatsapps;
+        document.getElementById('stats-badge').textContent=`${d.ultimas_24h} visitas hoy`;
+      });
+  }
+
+  function loadVisitas(){
+    fetch(`${BACKEND}/admin/visitas`,{headers:{Authorization:AUTH}})
+      .then(r=>r.json())
+      .then(rows=>{
+        const tb=document.getElementById('visitas-tbody');
+        if(!rows.length){tb.innerHTML='<tr><td colspan="3" class="loading">Sin visitas registradas.</td></tr>';return;}
+        tb.innerHTML=rows.map(v=>{
+          const dt=new Date(v.timestamp);
+          const fecha=dt.toLocaleDateString('es-AR')+' '+dt.toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'});
+          const badge=v.canal==='llamada'?`<span class="canal-badge canal-llamada">📞 Llamada</span>`:`<span class="canal-badge canal-whatsapp">💬 WhatsApp</span>`;
+          return `<tr><td>${v.vivienda}</td><td>${badge}</td><td>${fecha}</td></tr>`;
+        }).join('');
+      });
+  }
+
+  function renderAdminViviendas(viviendas){
+    document.getElementById('viviendas-tbody').innerHTML=viviendas.map(v=>`
+      <tr id="row-${v.id}">
+        <td><strong>${v.nombre}</strong></td>
+        <td><label class="toggle"><input type="checkbox" ${v.activa?'checked':''} onchange="toggleActiva(${v.id},this.checked)"><span class="slider"></span></label></td>
+        <td><input class="input-tel" type="tel" id="tel-${v.id}" value="${v.telefono||''}" placeholder="+5493512..."></td>
+        <td><input class="input-tel" type="tel" id="wa-${v.id}" value="${v.whatsapp||''}" placeholder="5493512..."></td>
+        <td><button class="btn-save" id="btn-${v.id}" onclick="guardarTelefono(${v.id})">Guardar</button></td>
+      </tr>`).join('');
+  }
+
+  function toggleActiva(id,activa){
+    fetch(`${BACKEND}/admin/viviendas/${id}`,{method:'PUT',headers:{'Content-Type':'application/json',Authorization:AUTH},body:JSON.stringify({activa})});
+  }
+
+  function guardarTelefono(id){
+    const tel=document.getElementById(`tel-${id}`).value;
+    const wa=document.getElementById(`wa-${id}`).value;
+    const btn=document.getElementById(`btn-${id}`);
+    fetch(`${BACKEND}/admin/viviendas/${id}`,{method:'PUT',headers:{'Content-Type':'application/json',Authorization:AUTH},body:JSON.stringify({telefono:tel,whatsapp:wa})})
+      .then(r=>r.json()).then(()=>{
+        btn.textContent='✓ Guardado';btn.classList.add('saved');
+        setTimeout(()=>{btn.textContent='Guardar';btn.classList.remove('saved');},2000);
+      });
   }
 
   loadViviendas();
