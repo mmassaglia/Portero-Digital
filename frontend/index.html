@@ -34,6 +34,8 @@
   .btn-call{background:var(--azul);color:#fff}
   .btn-wa{background:var(--wa);color:#fff}
   .btn-call svg,.btn-wa svg{width:15px;height:15px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .aviso{background:#fffbeb;border:1px solid #fde68a;border-radius:var(--radius);padding:13px 16px;display:flex;align-items:flex-start;gap:10px;margin-top:12px}
+  .aviso-text{font-size:13px;color:#92400e;line-height:1.5}
   .info-box{background:#fff;border-radius:var(--radius);border:1px solid #e2eaf0;padding:14px 16px;margin-top:12px}
   .info-row{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:#5a7080;line-height:1.5;margin-bottom:8px}
   .info-row:last-child{margin-bottom:0}
@@ -63,7 +65,12 @@
   <p class="section-label">Seleccione una vivienda</p>
   <div class="units" id="units"><div class="loading">Cargando viviendas…</div></div>
 
-  <div class="info-box" style="margin-top:20px">
+  <div class="aviso">
+    <span style="font-size:18px">📞</span>
+    <div class="aviso-text"><strong>Importante:</strong> Llame o envíe WhatsApp únicamente a los números habilitados en las opciones de cada vivienda.</div>
+  </div>
+
+  <div class="info-box" style="margin-top:12px">
     <div class="info-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Este sistema reemplaza temporalmente al portero eléctrico.</div>
     <div class="info-row"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Si no obtiene respuesta, intente nuevamente más tarde.</div>
     <div class="info-row"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>Use el medio que le resulte más cómodo: llamada o WhatsApp.</div>
