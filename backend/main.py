@@ -106,7 +106,7 @@ def root():
 def listar_viviendas():
     conn = get_conn()
     cur = conn.cursor()
-    cur.execute("SELECT * FROM viviendas WHERE activa = TRUE ORDER BY id")
+    cur.execute("SELECT * FROM viviendas WHERE activa = TRUE ORDER BY CAST(regexp_replace(nombre, '[^0-9]', '', 'g') AS INTEGER)")
     rows = cur.fetchall()
     cur.close()
     conn.close()
