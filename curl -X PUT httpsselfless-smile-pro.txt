@@ -15,3 +15,7 @@ Invoke-RestMethod -Method PUT -Uri "https://selfless-smile-production-f1f0.up.ra
 Invoke-RestMethod -Method PUT -Uri "https://selfless-smile-production-f1f0.up.railway.app/viviendas/3" -ContentType "application/json" -Body '{"telefono": "+5493512659569", "whatsapp": "5493512659569"}'
 
 Invoke-RestMethod -Method PUT -Uri "https://selfless-smile-production-f1f0.up.railway.app/viviendas/4" -ContentType "application/json" -Body '{"telefono": "+5493513333838", "whatsapp": "+5493513333838"}'
+
+# Activar vivienda 4
+$auth = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("admin:admin123"))
+Invoke-RestMethod -Method PUT -Uri "https://selfless-smile-production-f1f0.up.railway.app/admin/viviendas/4" -ContentType "application/json" -Headers @{Authorization="Basic $auth"} -Body '{"activa": true}'
