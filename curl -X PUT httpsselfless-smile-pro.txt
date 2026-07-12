@@ -1,0 +1,17 @@
+curl -X PUT https://selfless-smile-production-f1f0.up.railway.app/viviendas/20 -H "Content-Type: application/json" -d '{"telefono": "+5493512659569", "whatsapp": "+5493512659569"}'
+
+
+20 +5493512659569
+22 +5493516509616
+3  +5493513860478
+11 +5493512085275
+4  +5493513333838
+
+
+Invoke-RestMethod -Method PUT -Uri "https://selfless-smile-production-f1f0.up.railway.app/viviendas/1" -ContentType "application/json" -Body '{"telefono": "+5493513860478", "whatsapp": "5493513860478"}'
+
+Invoke-RestMethod -Method PUT -Uri "https://selfless-smile-production-f1f0.up.railway.app/viviendas/2" -ContentType "application/json" -Body '{"telefono": "+543515286944", "whatsapp": "+543515286944"}'
+
+Invoke-RestMethod -Method PUT -Uri "https://selfless-smile-production-f1f0.up.railway.app/viviendas/3" -ContentType "application/json" -Body '{"telefono": "+5493512659569", "whatsapp": "5493512659569"}'
+
+Invoke-RestMethod -Method PUT -Uri "https://selfless-smile-production-f1f0.up.railway.app/viviendas/4" -ContentType "application/json" -Body '{"telefono": "+5493513333838", "whatsapp": "+5493513333838"}'

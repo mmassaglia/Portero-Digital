@@ -1,0 +1,8 @@
+Activar una vivienda:
+Invoke-RestMethod -Method PUT -Uri "https://selfless-smile-production-f1f0.up.railway.app/admin/viviendas/5" -ContentType "application/json" -Headers @{Authorization="Basic "+[Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("admin:portero2024"))} -Body '{"activa": true}'
+
+Desactivar
+Invoke-RestMethod -Method PUT -Uri "https://selfless-smile-production-f1f0.up.railway.app/admin/viviendas/5" -ContentType "application/json" -Headers @{Authorization="Basic "+[Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("admin:portero2024"))} -Body '{"activa": false}'
+
+Ver todas la viviendas
+Invoke-RestMethod -Uri "https://selfless-smile-production-f1f0.up.railway.app/admin/viviendas" -Headers @{Authorization="Basic "+[Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("admin:portero2024"))}
