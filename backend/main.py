@@ -10,7 +10,7 @@ import psycopg2.extras
 
 app = FastAPI(title="Portero Digital - Los Gigantes")
 
-# Force deploy
+# Force deploy - sorted by number
 
 app.add_middleware(
     CORSMiddleware,
